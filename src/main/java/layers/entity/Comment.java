@@ -21,6 +21,55 @@ public class Comment {
     @JoinColumn(name = "recipe_id") // Example: Specifying the join column name as 'recipe_id'
     private Recipe recipe;
 
-    // Constructors, getters, setters, and other methods...
+    public Comment() {
+    }
 
+    public Comment(Long id, String content, User user, Recipe recipe) {
+        this.id = id;
+        this.content = content;
+        this.user = user;
+        this.recipe = recipe;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Recipe getRecipe() {
+        return recipe;
+    }
+
+    public void setRecipe(Recipe recipe) {
+        this.recipe = recipe;
+    }
+
+    @Override
+    public String toString() {
+        return "Comment{" +
+                "id=" + id +
+                ", content='" + content + '\'' +
+                ", user=" + user +
+                ", recipe=" + recipe +
+                '}';
+    }
 }

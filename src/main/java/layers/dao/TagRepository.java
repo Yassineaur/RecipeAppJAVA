@@ -1,15 +1,17 @@
 package layers.dao;
 
 import layers.entity.Recipe;
+import layers.entity.Tags;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.Optional;
 
-public interface RecipeRepository extends JpaRepository<Recipe, Integer>{
+public interface TagRepository extends JpaRepository<Tags, Integer> {
 
-    @Query("SELECT r FROM Recipe r WHERE r.title = :title")
-    Optional<Recipe> findByTitle(@Param("title") String title);
+
+    @Query("SELECT t FROM Tags t WHERE t.tagName = :title")
+    Optional<Tags> findByName(@Param("name") String tagName);
 
 }
