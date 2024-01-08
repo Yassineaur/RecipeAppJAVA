@@ -11,7 +11,7 @@ import java.util.Optional;
 public interface TagRepository extends JpaRepository<Tags, Integer> {
 
 
-    @Query("SELECT t FROM Tags t WHERE t.tagName = :title")
+    @Query("SELECT t FROM Tags t WHERE t.tagName = :name")
     Optional<Tags> findByName(@Param("name") String tagName);
 
 }

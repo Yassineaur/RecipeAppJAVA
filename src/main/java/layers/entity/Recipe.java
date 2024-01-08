@@ -23,7 +23,7 @@ public class Recipe {
     @Column(name = "recipe_publisher", nullable = false) // Example: Specifying column name as 'recipe_title' and making it non-nullable
     private int publisher;
 
-    @OneToMany(mappedBy = "comments")
+    @OneToMany(mappedBy = "recipe")
     private List<Comment> comments;
 
     @ManyToMany
@@ -32,7 +32,7 @@ public class Recipe {
             joinColumns = @JoinColumn(name = "recipe_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id")
     )
-    private List<Tags> tags;
+    private List<Tags> recipeTags;
 
     @ManyToMany
     @JoinTable(
@@ -45,12 +45,21 @@ public class Recipe {
     public Recipe() {
     }
 
-    public Recipe(int id, String title, String description, List<Comment> comments, List<User> favoritedByUsers) {
+    public Recipe(int id, String title, String description, List<Comment> comments, List<User> favoritedByUsers, List<Tags> tags) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.comments = comments;
         this.favoritedByUsers = favoritedByUsers;
+        this.recipeTags = tags;
+    }
+
+    public List<Tags> getTags() {
+        return recipeTags;
+    }
+
+    public void setTags(List<Tags> tags) {
+        this.recipeTags = tags;
     }
 
     public int getId() {
@@ -107,8 +116,11 @@ public class Recipe {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
+                ", publisher=" + publisher +
                 ", comments=" + comments +
                 ", favoritedByUsers=" + favoritedByUsers +
+                ", tags=" + recipeTags +
                 '}';
     }
+
 }

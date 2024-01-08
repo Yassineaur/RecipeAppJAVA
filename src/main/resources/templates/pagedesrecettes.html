@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recettes - Siculinaire</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Montserrat', sans-serif;
+            background: url('https://siculinaireblobs.blob.core.windows.net/siculinairecontainer/background-image2.png') fixed center;
+            background-size: cover;
+            color: #fff;
+            text-align: center;
+        }
+
+        header {
+            background: #819a8d;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        h1 {
+            font-size: 2em;
+            margin: 0;
+            padding: 10px;
+            color: #ecf0f1;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+        }
+
+        nav a {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-right: 10px;
+            font-size: 1.2em;
+            color: #3d3d3d;
+            text-decoration: none;
+            cursor: pointer;
+            border-radius: 10px;
+            background: #efeace;
+            transition: background 0.3s, color 0.3s, box-shadow 0.3s;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        a:hover {
+            background: #d2d2b4;
+            color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        a:active {
+            background: #b3b394;
+            box-shadow: none;
+        }
+
+        .logo {
+            max-width: 80px;
+            margin-right: 10px;
+        }
+
+        .site-name {
+            font-size: 2em;
+            color: #ecf0f1;
+            margin-right: auto;
+        }
+
+        .page-body {
+            background: rgba(169, 169, 169, 0.6);
+            padding: 30px;
+            margin: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-bar {
+            position: sticky;
+            top: 0;
+            background: #819a8d;
+            padding: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 1000;
+            border-radius: 10px;
+        }
+
+        .search-input {
+            flex-grow: 1;
+            margin-right: 10px;
+            padding: 8px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            width: fit-content;
+        }
+
+        .search-button {
+            padding: 10px 20px;
+            background: #efeace;
+            color: #3d3d3d;
+            font-size: 1.2em;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s, color 0.3s, box-shadow 0.3s;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-button:hover {
+            background: #d2d2b4;
+            color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .search-button:active {
+            background: #b3b394;
+            box-shadow: none;
+        }
+
+        .recipe-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            text-align: left;
+            margin-top: 80px;
+        }
+
+        .recipe-item {
+            margin-bottom: 20px;
+            border-radius: 15px;
+            background-color: rgba(216,228,188, 0.5);
+            padding: 20px;
+            text-align: center;
+        }
+        h1{
+            text-decoration-color: white;
+            text-decoration-style: wavy;
+            color: white;
+            font-weight: bold; /* Make the text bold */
+            font-size: 27px; /* Adjust the font size */
+            font-family: Andalus, serif;
+            text-space: 4%;
+        }
+        a{
+            text-decoration: none;
+        }
+        a:hover{
+            text-decoration: none;
+        }
+         p{
+             text-decoration-color: black;
+             color: black;
+             font-weight: bold; /* Make the text bold */
+             font-size: 27px; /* Adjust the font size */
+             font-family: Andalus, serif;
+             text-space: 4%;
+         }
+        .recipe-title {
+            font-size: 1.5em;
+            color: #B88D65;
+            margin-bottom: 10px;
+        }
+
+        .recipe-description {
+            font-size: 1.2em;
+            color: black;
+            margin-bottom: 20px;
+        }
+
+        .recipe-image {
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+        span{
+            margin-left: 1%;
+            margin-right: 1%;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<header>
+    <img class="logo" src="https://siculinaireblobs.blob.core.windows.net/siculinairecontainer/logo.png" alt="Logo">
+    <h1 class="site-name">Siculinaire</h1>
+    <nav>
+        <a th:href="@{/}">Accueil</a>
+    </nav>
+</header>
+
+<div class="page-body">
+
+
+        <form class="search-bar" th:action="@{/recipe/rechercher}" method="post">
+            <input class="search-input" type="text" placeholder="Nom de la recette ici" name="recipeId" id="recipeId">
+            <button class="search-button" type="submit">Rechercher</button>
+            <span> Ou </span>
+            <a  class="search-button" th:href="@{/recipe/pagepublier}">Publier</a>
+        </form>
+
+
+
+
+
+
+    <ul class="recipe-list" th:each="recipe : ${allRecipes}">
+        <a th:href="@{/recipe/consulter(recipeId=${recipe.id})}">
+            <li class="recipe-item">
+                <h2 class="recipe-title" th:text="${recipe.title}"></h2>
+                <img class="recipe-image" th:src="'https://siculinaireblobs.blob.core.windows.net/siculinairecontainer/' + ${recipe.id} + '.jpg'" alt="Recipe Image">
+                <p class="recipe-description" th:text="${recipe.description}"></p>
+            </li>
+        </a>
+    </ul>
+
+</div>
+</body>
+</html>
+

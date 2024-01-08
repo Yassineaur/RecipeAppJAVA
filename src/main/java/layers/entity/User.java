@@ -10,7 +10,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id") // Example: Specifying column name as 'user_id'
-    private Long id;
+    private int id;
 
     @Column(name = "user_username", nullable = false, unique = true) // Example: Specifying column name as 'user_username', making it non-nullable and unique
     private String username;
@@ -24,18 +24,18 @@ public class User {
     public User() {
     }
 
-    public User(Long id, String username, String password, List<Recipe> favoriteRecipes) {
+    public User(int id, String username, String password, List<Recipe> favoriteRecipes) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.favoriteRecipes = favoriteRecipes;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -67,8 +67,8 @@ public class User {
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
+                ", username='" + username +
+                ", password='" + password +
                 ", favoriteRecipes=" + favoriteRecipes +
                 '}';
     }

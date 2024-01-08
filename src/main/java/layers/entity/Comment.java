@@ -68,8 +68,10 @@ public class Comment {
         return "Comment{" +
                 "id=" + id +
                 ", content='" + content + '\'' +
-                ", user=" + user +
-                ", recipe=" + recipe +
+                ", user=" + user.getUsername() + // Assuming User has a getUsername() method
+                ", recipe=" + recipe.getTitle() + // Assuming Recipe has a getTitle() method
                 '}';
     }
+
+
 }

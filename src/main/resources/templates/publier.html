@@ -133,16 +133,15 @@
     <h1 class="site-name">Siculinaire</h1>
     <nav>
         <a th:href="@{/}">Accueil</a>
-        <a th:href="@{/user/pageregister}">Inscription</a>
     </nav>
 </header>
 
 <div class="page-body">
-    <h2>Connexion</h2>
-    <form th:action="@{/user/connexion}" th:object="${user}" method="post">
-        <input type="text" placeholder="Nom d'utilisateur" th:field="*{username}" />
-        <input type="password" placeholder="Mot de passe" th:field="*{password}" />
-        <button type="submit" value="Submit" >Se connecter</button>
+    <h2>Publier une recette</h2>
+    <form th:action="@{/recipe/publier}" th:object="${recipe}" method="post">
+        <input type="text" placeholder="Nom de votre recette" th:field="*{title}" />
+        <input type="password" placeholder="Description" th:field="*{description}" />
+        <button type="submit" value="Submit" >Publier</button>
     </form>
 </div>
 </body>

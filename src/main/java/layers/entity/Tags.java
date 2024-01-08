@@ -14,16 +14,16 @@ public class Tags {
     @Column(name = "tag_name")
     private String tagName;
 
-    @ManyToMany(mappedBy = "tagGivenTo")
+    @ManyToMany(mappedBy = "recipeTags")
     private List<Recipe> recipes;
 
     public Tags() {
     }
 
-    public Tags(int id, String tagName, List<Recipe> favoriteRecipes) {
+    public Tags(int id, String tagName, List<Recipe> recipes) {
         this.id = id;
         this.tagName = tagName;
-        this.recipes = favoriteRecipes;
+        this.recipes = recipes;
     }
 
     public int getId() {
@@ -58,4 +58,5 @@ public class Tags {
                 ", favoriteRecipes=" + recipes +
                 '}';
     }
+
 }

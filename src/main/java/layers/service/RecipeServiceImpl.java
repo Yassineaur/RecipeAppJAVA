@@ -11,7 +11,7 @@ import java.util.Optional;
 @Service
 public class RecipeServiceImpl implements RecipeService {
 
-    private RecipeRepository recipeRepositoy;
+    private final RecipeRepository recipeRepositoy;
 
     @Autowired
     public RecipeServiceImpl(RecipeRepository theRecipeRepository) {
@@ -29,10 +29,11 @@ public class RecipeServiceImpl implements RecipeService {
         Recipe recipe = null;
         if(result.isPresent()){
             recipe = result.get();
+            return recipe;
         }else{
-            throw  new RuntimeException("Did not find the recipe");
+            return recipe;
         }
-        return recipe;
+
     }
 
     @Override
@@ -46,10 +47,10 @@ public class RecipeServiceImpl implements RecipeService {
         Recipe recipe = null;
         if(result.isPresent()){
             recipe = result.get();
+            return recipe;
         }else{
-            throw  new RuntimeException("Did not find the recipe");
+            return recipe;
         }
-        return recipe;
     }
 
     @Override

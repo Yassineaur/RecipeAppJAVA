@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recette - Siculinaire</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Montserrat', sans-serif;
+            background: url('https://siculinaireblobs.blob.core.windows.net/siculinairecontainer/background-image2.png') fixed center;
+            background-size: cover;
+            color: #fff;
+            text-align: center;
+        }
+
+        header {
+            background: #819a8d;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        h1 {
+            font-size: 2em;
+            margin: 0;
+            padding: 10px;
+            color: #ecf0f1;
+        }
+
+        #recette {
+            display: none;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+        }
+
+        nav a {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-right: 10px;
+            font-size: 1.2em;
+            color: #3d3d3d;
+            text-decoration: none;
+            border-radius: 10px;
+            background: #efeace;
+            transition: background 0.3s, color 0.3s, box-shadow 0.3s;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        a:hover {
+            background: #d2d2b4;
+            color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        a:active {
+            background: #b3b394;
+            box-shadow: none;
+        }
+
+        .logo {
+            max-width: 80px;
+            margin-right: 10px;
+        }
+
+        .site-name {
+            font-size: 2em;
+            color: #ecf0f1;
+            margin-right: auto;
+        }
+
+        .page-body {
+            background: rgba(169, 169, 169, 0.8);
+            padding: 30px;
+            margin: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
+            position: relative;
+        }
+
+        .favorite-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background: #efeace;
+            color: #3d3d3d;
+            font-size: 1.2em;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s, color 0.3s, box-shadow 0.3s;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .favorite-button:hover {
+            background: #d2d2b4;
+            color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .favorite-button:active {
+            background: #b3b394;
+            box-shadow: none;
+        }
+
+        .comments-section {
+            margin-top: 30px;
+            text-align: left;
+        }
+
+        .comment-form {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .comment-input {
+            margin: 10px;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+        /* Add this style for the comments section */
+        .comments-section {
+            margin-top: 30px;
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .comment-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            text-align: left;
+        }
+
+        .comment-item {
+            margin-bottom: 20px;
+        }
+
+        .comment-content {
+            font-size: 1em;
+            color: #003366;
+        }
+
+        .comment-form {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%; /* Make the comment input and button take full width */
+        }
+
+        .comment-input {
+            flex-grow: 1;
+            margin: 10px;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+
+        .comment-button {
+            margin: 10px;
+            padding: 15px 30px;
+            background: #efeace;
+            color: #3d3d3d;
+            font-size: 1.2em;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s, color 0.3s, box-shadow 0.3s;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .comment-button:hover {
+            background: #d2d2b4;
+            color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .comment-button:active {
+            background: #b3b394;
+            box-shadow: none;
+        }
+
+        /* Add this style for the comment input container on the right */
+        .comment-input-container {
+            width: 30%; /* Adjust the width as needed */
+            margin-left: 20px; /* Add some margin for separation */
+        }
+
+        .fav {
+            text-decoration: none;
+            margin: 10px;
+            padding: 15px 30px;
+            background: darkcyan;
+            color: white;
+            font-size: 1.2em;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s, color 0.3s, box-shadow 0.3s;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .comment-button {
+            margin-left: 40px;
+            border-color: black;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            padding: 15px 30px;
+            background: #efeace;
+            color: #3d3d3d;
+            font-size: 1.2em;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s, color 0.3s, box-shadow 0.3s;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .comment-button:hover {
+            background: #d2d2b4;
+            color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .recipe-image {
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+
+        .comment-button:active {
+            background: #b3b394;
+            box-shadow: none;
+        }
+
+        p {
+            text-decoration-color: black;
+            color: black;
+            font-weight: bold;
+            font-size: 20px;
+            font-family: Andalus, serif;
+            text-space: 4%;
+        }
+
+        .search-button {
+            padding: 10px 20px;
+            background: #efeace;
+            color: #3d3d3d;
+            font-size: 1.2em;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s, color 0.3s, box-shadow 0.3s;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-button:hover {
+            background: #d2d2b4;
+            color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .search-button:active {
+            background: #b3b394;
+            box-shadow: none;
+        }
+
+        .comment-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            text-align: left;
+        }
+h1{
+    margin-left: 40px;
+    color: black;
+    margin-top: 30px;
+}
+    .all{
+        color: black;
+        margin-top: 50px;
+    background-color: rgba(255, 255, 255, 0.8);
+}
+        .search-input {
+            margin-left: 30px;
+            border-color: black;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            flex-grow: 1;
+            padding: 8px;
+            border-radius: 5px;
+            font-size: 1em;
+            width: 750px;
+        }
+
+        .comment-item {
+            margin-bottom: 20px;
+        }
+
+        .comment-content {
+            font-size: 1em;
+            color: #003366;
+        }
+  li{
+      margin:4px;
+      list-style: none;
+      padding: 0;
+      margin: 2px;
+      text-align: left;
+      border: solid;
+      background-color: rgba(255, 255, 255, 0.6);
+      padding: 1%;
+      border-color: #d2d2b4;
+      border-radius: 3%;
+      width: 750px;
+  }
+    </style>
+    <!-- Ajout de la police Montserrat -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <img th:href="@{/}" class="logo" src="https://siculinaireblobs.blob.core.windows.net/siculinairecontainer/logo.png" alt="Logo">
+        <h1 class="site-name">Siculinaire</h1>
+        <div th:if="${auth != false}">
+        <nav>
+            <a th:href="@{/}">Accueil</a>
+            <a th:href="@{/user/profile}">Profile</a>
+            <a th:href="@{/user/deconnexion}">Se deconnecter</a>
+        </nav>
+        </div>
+        <div th:if="${auth == false}">
+            <nav>
+                <a th:href="@{/}">Accueil</a>
+                <a th:href="@{/user/pageconnexion}">Connexion</a>
+                <a th:href="@{/user/pageregister}">Inscription</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="page-body">
+        <!-- Contenu de la recette -->
+        <h2 th:text="${recipe.title}"></h2>
+        <img class="recipe-image" th:src="'https://siculinaireblobs.blob.core.windows.net/siculinairecontainer/' + ${recipe.id} + '.jpg'" alt="Recipe Image">
+        <p th:text="${recipe.description}"></p>
+        <!-- Autres détails de la recette -->
+
+        <!-- Espace commentaires -->
+        <div class="comments-section">
+            <!-- Bouton "Favori" -->
+            <div th:if="${auth != false}">
+            <a class="fav" th:href="@{/recipe/favoris(recipeId=${recipe.id})}">Ajouter à favoris</a>
+            </div>
+
+<div class="all">
+            <h1>Espace commentaires</h1>
+
+
+
+            <!-- Liste des commentaires -->
+
+            <div>
+
+                <ul>
+                    <li th:each="comment : ${comments}">
+                        <p><span th:text="${comment[0]}"></span> <span>: <span th:text="${comment[1]}"></span></span></p>
+
+                    </li>
+                </ul>
+            </div>
+            <!-- Formulaire de commentaire -->
+            <!-- Formulaire de commentaire -->
+
+                <!-- New Comment Input -->
+
+                    <form class="comment-input-container" th:if="${auth != false}" th:action="@{/user/commenter}" method="post">
+                        <input class="search-input" type="text" placeholder="Ajouter commentaire..." name="comment" id="comment">
+                        <button class="comment-button" type="submit">Soumettre</button>
+                        <input type="hidden" th:value="${recipe.id}" name="idRecipe" id="idRecipe">
+
+                    </form>
+</div>
+
+        </div>
+    </div>
+</body>
+</html>
